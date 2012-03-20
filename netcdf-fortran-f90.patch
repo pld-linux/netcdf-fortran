@@ -1,0 +1,10 @@
+--- netcdf-fortran-4.2/f90/netcdf_visibility.f90.orig	2011-09-27 16:17:02.000000000 +0200
++++ netcdf-fortran-4.2/f90/netcdf_visibility.f90	2012-03-20 16:03:11.006184197 +0100
+@@ -20,6 +20,6 @@
+   public :: nf90_put_att, nf90_get_att
+   
+   ! Variable routines
+-  public :: nf90_def_var, nf90_inq_varid, nf90_rename_var, nf90_inquire_variable 
++  public :: nf90_def_var, nf90_inq_varid, nf90_set_var_chunk_cache, nf90_rename_var, nf90_inquire_variable 
+   ! overloaded functions
+   public :: nf90_put_var, nf90_get_var
