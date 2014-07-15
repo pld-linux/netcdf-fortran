@@ -100,7 +100,7 @@ CPPFLAGS="%{rpmcppflags} -DgFortran=1"
 %{__make}
 
 %if %{with tests}
-%{__make} check
+%{__make} -j1 check
 %endif
 
 %install
