@@ -1,27 +1,26 @@
 #
 # Conditional build:
-%bcond_without	f90		# don't build Fortran 90 interface (just builtin F77)
+%bcond_without	f2003		# don't build Fortran 2003 interface (just F77/F90)
 %bcond_without	tests		# don't perform "make check"
 				# (note: tests need endoder-enabled szip)
 #
 Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
-Version:	4.2
+Version:	4.4.0
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
-# Source0-md5:	cc3bf530223e8f4aff93793b9f197bf3
+# Source0-md5:	258fac4fe522be5945d84bf4a4b3b837
 Patch0:		%{name}-f90.patch
-Patch1:		%{name}-info.patch
 URL:		http://www.unidata.ucar.edu/packages/netcdf/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-%if %{with f90}
-BuildRequires:	gcc-fortran >= 5:4.0
+%if %{with f2003}
+BuildRequires:	gcc-fortran >= 6:4.4
 %else
-BuildRequires:	gcc-g77
+BuildRequires:	gcc-fortran >= 5:4.0
 %endif
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	netcdf-devel >= 4.2
@@ -55,10 +54,10 @@ Summary:	Header files for netCDF Fortran interface
 Summary(pl.UTF-8):	Pliki nagłówkowe interfejsu netCDF dla języka Fortran
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-%if %{with f90}
-Requires:	gcc-fortran >= 5:4.0
+%if %{with f2003}
+Requires:	gcc-fortran >= 6:4.4
 %else
-Requires:	gcc-g77
+Requires:	gcc-fortran >= 5:4.0
 %endif
 Requires:	netcdf-devel >= 4.2
 Obsoletes:	netcdf-f90-devel
@@ -85,7 +84,6 @@ Statyczna wersja biblioteki netCDF dla języka Fortran.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -97,7 +95,7 @@ Statyczna wersja biblioteki netCDF dla języka Fortran.
 CPPFLAGS="%{rpmcppflags} -DgFortran=1"
 %configure \
 	FCFLAGS="%{rpmcflags}" \
-	%{!?with_f90:--disable-f90}
+	%{!?with_f2003:--disable-f03}
 
 %{__make}
 
@@ -110,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libnetcdff.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,26 +126,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYRIGHT README
+%doc COPYRIGHT README.md RELEASE_NOTES.md
 %attr(755,root,root) %{_libdir}/libnetcdff.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libnetcdff.so.5
+%attr(755,root,root) %ghost %{_libdir}/libnetcdff.so.6
 
 %files devel
 %defattr(644,root,root,755)
-%doc man4/netcdf-f77.html man4/netcdf-f90.html
 %attr(755,root,root) %{_bindir}/nf-config
 %attr(755,root,root) %{_libdir}/libnetcdff.so
-%{_libdir}/libnetcdff.la
 %{_includedir}/netcdf.inc
-%{_pkgconfigdir}/netcdf-fortran.pc
-%{_mandir}/man3/netcdf_f77.3*
-%{_infodir}/netcdf-f77.info*
-%if %{with f90}
-%{_includedir}/netcdf.mod
+%{_includedir}/netcdf*.mod
 %{_includedir}/typesizes.mod
-%{_mandir}/man3/netcdf_f90.3*
-%{_infodir}/netcdf-f90.info*
-%endif
+%{_pkgconfigdir}/netcdf-fortran.pc
+%{_mandir}/man3/netcdf_fortran.3*
 
 %files static
 %defattr(644,root,root,755)

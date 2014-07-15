@@ -1,5 +1,5 @@
---- netcdf-fortran-4.2/f90/netcdf_visibility.f90.orig	2011-09-27 16:17:02.000000000 +0200
-+++ netcdf-fortran-4.2/f90/netcdf_visibility.f90	2012-03-20 16:03:11.006184197 +0100
+--- netcdf-fortran-4.2/fortran/netcdf_visibility.f90.orig	2011-09-27 16:17:02.000000000 +0200
++++ netcdf-fortran-4.2/fortran/netcdf_visibility.f90	2012-03-20 16:03:11.006184197 +0100
 @@ -20,6 +20,6 @@
    public :: nf90_put_att, nf90_get_att
    
