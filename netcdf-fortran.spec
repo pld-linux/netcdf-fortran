@@ -7,12 +7,12 @@
 Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
-Version:	4.4.0
+Version:	4.4.1
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
-# Source0-md5:	258fac4fe522be5945d84bf4a4b3b837
+# Source0-md5:	ff7923f4ffe1f366fb5cee0a1fb204bd
 Patch0:		%{name}-f90.patch
 URL:		http://www.unidata.ucar.edu/packages/netcdf/
 BuildRequires:	autoconf >= 2.59
