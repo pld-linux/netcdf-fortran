@@ -1,18 +1,18 @@
 #
 # Conditional build:
-%bcond_without	f2003		# don't build Fortran 2003 interface (just F77/F90)
-%bcond_without	tests		# don't perform "make check"
-				# (note: tests need endoder-enabled szip)
+%bcond_without	f2003		# Fortran 2003 interface (beside F77/F90)
+%bcond_without	static_libs	# static library
+%bcond_without	tests		# unit tests (require encoder-enabled szip)
 #
 Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
-Version:	4.4.5
+Version:	4.5.2
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
-# Source0-md5:	edb51c7320a9024b419b7a87e05fa79a
+# Source0-md5:	864c6a5548b6f1e00579caf3cbbe98cc
 Patch0:		%{name}-f90.patch
 URL:		http://www.unidata.ucar.edu/packages/netcdf/
 BuildRequires:	autoconf >= 2.59
@@ -89,13 +89,13 @@ Statyczna wersja biblioteki netCDF dla języka Fortran.
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
-%{__autoheader}
 %{__automake}
 # specify gFortran, configure detection may fail if FC specifies *-gfortran different `which gfortran`
 CPPFLAGS="%{rpmcppflags} -DgFortran=1"
 %configure \
 	FCFLAGS="%{rpmcflags}" \
-	%{!?with_f2003:--disable-f03}
+	%{!?with_f2003:--disable-f03} \
+	%{!?with_static_libs:--disable-static}
 
 %{__make}
 
@@ -128,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYRIGHT README.md RELEASE_NOTES.md
 %attr(755,root,root) %{_libdir}/libnetcdff.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libnetcdff.so.6
+%attr(755,root,root) %ghost %{_libdir}/libnetcdff.so.7
 
 %files devel
 %defattr(644,root,root,755)
@@ -138,8 +138,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/netcdf*.mod
 %{_includedir}/typesizes.mod
 %{_pkgconfigdir}/netcdf-fortran.pc
+%{_mandir}/man3/netcdf_f77.3*
 %{_mandir}/man3/netcdf_fortran.3*
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libnetcdff.a
+%endif
