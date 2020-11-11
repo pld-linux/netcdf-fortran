@@ -7,25 +7,25 @@
 Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
-Version:	4.5.2
+Version:	4.5.3
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
-# Source0-md5:	864c6a5548b6f1e00579caf3cbbe98cc
+# Source0-md5:	10cfce1ed4f474af30dbbad076b085d2
 Patch0:		%{name}-f90.patch
-URL:		http://www.unidata.ucar.edu/packages/netcdf/
+URL:		https://www.unidata.ucar.edu/software/netcdf/
 BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.13
 %if %{with f2003}
 BuildRequires:	gcc-fortran >= 6:4.4
 %else
 BuildRequires:	gcc-fortran >= 5:4.0
 %endif
 BuildRequires:	libtool >= 2:2.2
-BuildRequires:	netcdf-devel >= 4.6.2
+BuildRequires:	netcdf-devel >= 4.7.4
 BuildRequires:	texinfo
-Requires:	netcdf >= 4.6.2
+Requires:	netcdf >= 4.7.4
 Obsoletes:	netcdf-f90
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,7 +59,7 @@ Requires:	gcc-fortran >= 6:4.4
 %else
 Requires:	gcc-fortran >= 5:4.0
 %endif
-Requires:	netcdf-devel >= 4.6.2
+Requires:	netcdf-devel >= 4.7.4
 Obsoletes:	netcdf-f90-devel
 
 %description devel
@@ -134,6 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/nf-config
 %attr(755,root,root) %{_libdir}/libnetcdff.so
+%{_libdir}/libnetcdff.settings
 %{_includedir}/netcdf.inc
 %{_includedir}/netcdf*.mod
 %{_includedir}/typesizes.mod
