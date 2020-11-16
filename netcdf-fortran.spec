@@ -8,7 +8,7 @@ Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
 Version:	4.5.3
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Libraries
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
@@ -90,10 +90,15 @@ Statyczna wersja biblioteki netCDF dla języka Fortran.
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
-# specify gFortran, configure detection may fail if FC specifies *-gfortran different `which gfortran`
+%define	gfortran_version	%(gfortran -dumpversion)
 CPPFLAGS="%{rpmcppflags} -DgFortran=1"
 %configure \
+%if "%{_ver_ge '%{gfortran_version}' '10.0'}" == "1"
+	FCFLAGS="%{rpmcflags} -fallow-argument-mismatch" \
+	FFLAGS="%{rpmcflags} -fallow-argument-mismatch" \
+%else
 	FCFLAGS="%{rpmcflags}" \
+%endif
 	%{!?with_f2003:--disable-f03} \
 	%{!?with_static_libs:--disable-static}
 
