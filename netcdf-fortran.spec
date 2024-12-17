@@ -26,7 +26,7 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	netcdf-devel >= 4.7.4
 BuildRequires:	texinfo
 Requires:	netcdf >= 4.7.4
-Obsoletes:	netcdf-f90
+Obsoletes:	netcdf-f90 < 3.6.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,7 +60,7 @@ Requires:	gcc-fortran >= 6:4.4
 Requires:	gcc-fortran >= 5:4.0
 %endif
 Requires:	netcdf-devel >= 4.7.4
-Obsoletes:	netcdf-f90-devel
+Obsoletes:	netcdf-f90-devel < 3.6.2
 
 %description devel
 Header files for netCDF - Fortran interface.
@@ -73,7 +73,7 @@ Summary:	NetCDF Fortran static library
 Summary(pl.UTF-8):	Biblioteka statyczna netCDF dla języka Fortran
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Obsoletes:	netcdf-f90-static
+Obsoletes:	netcdf-f90-static < 3.6.2
 
 %description static
 Static version of netCDF Fortran library.
