@@ -7,12 +7,12 @@
 Summary:	NetCDF Fortran library
 Summary(pl.UTF-8):	Biblioteka NetCDF dla języka Fortran
 Name:		netcdf-fortran
-Version:	4.5.3
-Release:	3
+Version:	4.6.1
+Release:	1
 License:	BSD-like
 Group:		Libraries
-Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/%{name}-%{version}.tar.gz
-# Source0-md5:	10cfce1ed4f474af30dbbad076b085d2
+Source0:	https://downloads.unidata.ucar.edu/netcdf-fortran/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	a34fa637abc362776b5165c6e5da324d
 Patch0:		%{name}-f90.patch
 URL:		https://www.unidata.ucar.edu/software/netcdf/
 BuildRequires:	autoconf >= 2.59
@@ -23,9 +23,9 @@ BuildRequires:	gcc-fortran >= 6:4.4
 BuildRequires:	gcc-fortran >= 5:4.0
 %endif
 BuildRequires:	libtool >= 2:2.2
-BuildRequires:	netcdf-devel >= 4.7.4
+BuildRequires:	netcdf-devel >= 4.9.0
 BuildRequires:	texinfo
-Requires:	netcdf >= 4.7.4
+Requires:	netcdf >= 4.9.0
 Obsoletes:	netcdf-f90 < 3.6.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,7 +59,7 @@ Requires:	gcc-fortran >= 6:4.4
 %else
 Requires:	gcc-fortran >= 5:4.0
 %endif
-Requires:	netcdf-devel >= 4.7.4
+Requires:	netcdf-devel >= 4.9.0
 Obsoletes:	netcdf-f90-devel < 3.6.2
 
 %description devel
@@ -90,15 +90,9 @@ Statyczna wersja biblioteki netCDF dla języka Fortran.
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
-%define	gfortran_version	%(gfortran -dumpversion)
 CPPFLAGS="%{rpmcppflags} -DgFortran=1"
 %configure \
-%if "%{_ver_ge '%{gfortran_version}' '10.0'}" == "1"
-	FCFLAGS="%{rpmcflags} -fallow-argument-mismatch" \
-	FFLAGS="%{rpmcflags} -fallow-argument-mismatch" \
-%else
 	FCFLAGS="%{rpmcflags}" \
-%endif
 	%{!?with_f2003:--disable-f03} \
 	%{!?with_static_libs:--disable-static}
 
